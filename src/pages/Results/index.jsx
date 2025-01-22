@@ -16,7 +16,7 @@ const ResultsContainer = styled.div`
 `
 
 const ResultsTitle = styled.h2`
-  color: ${({ theme }) => (theme === 'light' ? '#000000' : '#ffffff')};
+  color: ${({ theme }) => (theme === 'light' ? '#000000' : '#FFFFFF')};
   font-weight: bold;
   font-size: 28px;
   max-width: 60%;
@@ -39,7 +39,7 @@ const JobTitle = styled.span`
 const JobDescription = styled.div`
   font-size: 18px;
   & > p {
-    color: ${({ theme }) => (theme === 'light' ? colors.secondary : '#ffffff')};
+    color: ${({ theme }) => (theme === 'light' ? colors.secondary : '#FFFFFF')};
     margin-block-start: 5px;
   }
   & > span {
@@ -52,7 +52,7 @@ const LoaderWrapper = styled.div`
   justify-content: center;
 `
 
-export function formatFetchParams(answers) {
+export function formatQueryParams(answers) {
   const answerNumbers = Object.keys(answers)
 
   return answerNumbers.reduce((previousParams, answerNumber, index) => {
@@ -72,23 +72,25 @@ export function formatJobList(title, listLength, index) {
 function Results() {
   const { theme } = useTheme()
   const { answers } = useContext(SurveyContext)
-  const fetchParams = formatFetchParams(answers)
+  const queryParams = formatQueryParams(answers)
 
   const { data, isLoading, error } = useFetch(
-    `http://localhost:8000/results?${fetchParams}`
+    `http://localhost:8000/results?${queryParams}`
   )
 
   if (error) {
-    return <span>Il y a un problème</span>
+    return <pre>{error}</pre>
+  } else if (isLoading) {
+    return (
+      <LoaderWrapper>
+        <Loader />
+      </LoaderWrapper>
+    )
   }
 
   const resultsData = data?.resultsData
 
-  return isLoading ? (
-    <LoaderWrapper>
-      <Loader />
-    </LoaderWrapper>
-  ) : (
+  return (
     <ResultsContainer theme={theme}>
       <ResultsTitle theme={theme}>
         Les compétences dont vous avez besoin :
