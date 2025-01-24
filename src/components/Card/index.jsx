@@ -12,7 +12,7 @@ const CardLabel = styled.span`
   padding-left: 15px;
 `
 
-const CardTitle = styled.span`
+const CardTitle = styled.div`
   color: ${({ theme }) => (theme === 'light' ? '#000000' : '#FFFFFF')};
   font-size: 22px;
   font-weight: normal;
