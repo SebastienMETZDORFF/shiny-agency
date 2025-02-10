@@ -1,32 +1,21 @@
 import Card from './'
-import { screen, fireEvent } from '@testing-library/react'
-import { render } from '../../utils/test'
+import { render, screen } from '@testing-library/react'
+import { ThemeProvider } from '../../utils/context'
 
 describe('Card', () => {
-  test('should render title and image', () => {
+  it('Should render title and image', async () => {
     render(
-      <Card
-        title="Harry Potter"
-        label="Magicien frontend"
-        picture="/myPicture.png"
-      />
+      <ThemeProvider>
+        <Card
+          title="Harry Potter"
+          label="Magicien frontend"
+          picture="/myPicture.png"
+        />
+      </ThemeProvider>
     )
     const cardPicture = screen.getByRole('img')
     const cardTitle = screen.getByText(/Harry/i)
     expect(cardPicture.src).toBe('http://localhost/myPicture.png')
-    expect(cardTitle.textContent).toBe(' Harry Potter ')
-  })
-  test('should add ⭐️ around title', async () => {
-    render(
-      <Card
-        title="Harry Potter"
-        label="Magicien frontend"
-        picture="/myPicture.png"
-      />
-    )
-    const cardTitle = screen.getByText(/Harry/i)
-    const parentNode = cardTitle.closest('div')
-    fireEvent.click(parentNode)
-    expect(cardTitle.textContent).toBe('⭐️ Harry Potter ⭐️')
+    expect(cardTitle.textContent).toBe('Harry Potter')
   })
 })

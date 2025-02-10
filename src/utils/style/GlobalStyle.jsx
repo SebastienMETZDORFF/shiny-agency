@@ -7,6 +7,10 @@ const StyledGlobalStyle = createGlobalStyle`
         font-family: 'Trebuchet MS', Helvetica, sans-serif;
     }
  
+    a {
+      text-decoration: none;
+    }
+
     body {
         background-color: ${({ isDarkMode }) =>
           isDarkMode ? colors.dark : 'white'};
